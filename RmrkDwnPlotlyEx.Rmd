@@ -1,0 +1,71 @@
+---
+title: "RMarkDown Plotly Ex"
+author: "Guillermo Cuenca"
+date: "22 de octubre de 2016"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## R Markdown & Plotly
+
+Create a web page presentation using R Markdown that features a plot created with Plotly. Host your webpage on either GitHub Pages, RPubs, or NeoCities. 
+
+Webpage must contain the date that you created the document, and it must contain a plot created with Plotly.
+
+## Kind of Graphs
+
+- Basic Scatterplot
+- Color Scatterplot
+- Multy Color Scatterplots
+- Heatmap
+- Graph Volcainplot
+
+## Basic Scatterplot
+
+```{r, echo = FALSE, message=FALSE}
+library(plotly)
+plot_ly(mtcars, x = ~wt, y = ~mpg, mode = "markers")
+```
+
+## Color Scatterplot
+
+```{r, echo = FALSE, message=FALSE}
+library(plotly)
+set.seed(100)
+d <- diamonds[sample(nrow(diamonds), 1000), ]
+plot_ly(d, x = ~carat, y = ~price, color = ~carat,
+        size = ~carat, text = ~paste("Clarity: ", clarity))
+```
+
+## Multy Color Scatterplots
+
+```{r, echo = FALSE, message=FALSE}
+p <- ggplot(data = d, aes(x = carat, y = price)) +
+  geom_point(aes(text = paste("Clarity:", clarity))) +
+  geom_smooth(aes(colour = cut, fill = cut)) + facet_wrap(~ cut)
+
+ggplotly(p)
+```
+
+## Heatmap
+
+```{r, echo = FALSE, message=FALSE}
+plot_ly(z = volcano, colorscale = "Greys", type = "heatmap")
+```
+
+## Graph Volcainplot
+
+```{r, echo = FALSE, message=FALSE}
+plot_ly(z = ~volcano, type = "surface")
+```
+
+## Observations
+
+- This plots are taken from https://plot.ly/r/ 
+- I´m in process to understand why is showing in page 4/9 warnings about plotly and ggplot versions
+- In some times in volcainplot need to pass mouse over layout to see
+
+Thanks
